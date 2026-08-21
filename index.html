@@ -1,0 +1,1408 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mi Proceso de Selección &amp; Biblioteca de Templates</title>
+<style>
+  :root{
+    --cream:#F5EFDF;
+    --black:#0A0A0A;
+    --lime:#C8F000;
+    --purple:#8C93D9;
+    --charcoal:#2B2B29;
+    --white:#FFFFFF;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--cream);
+    color:var(--black);
+    font-family:Arial, Helvetica, sans-serif;
+    line-height:1.5;
+  }
+  .blocky{font-family:Arial, Helvetica, sans-serif; font-weight:900; letter-spacing:-0.01em;}
+  .rounded{font-family:Arial, Helvetica, sans-serif; font-weight:700;}
+
+  /* ---------- HEADER ---------- */
+  header{
+    position:relative;
+    background:var(--black);
+    color:var(--cream);
+    padding:56px 24px 64px;
+    overflow:hidden;
+    text-align:center;
+  }
+  header .sunburst{
+    position:absolute;
+    top:-60px; right:-60px;
+    width:220px; height:220px;
+    opacity:0.9;
+    pointer-events:none;
+  }
+  header .sunburst2{
+    position:absolute;
+    bottom:-70px; left:-50px;
+    width:180px; height:180px;
+    opacity:0.7;
+    pointer-events:none;
+  }
+  .logo{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:4px;
+    font-size:2.6rem;
+    color:var(--lime);
+    margin-bottom:14px;
+  }
+  header h1{
+    font-size:2.1rem;
+    margin:0 0 10px;
+    color:var(--white);
+    max-width:720px;
+    margin-left:auto; margin-right:auto;
+  }
+  header p.sub{
+    color:var(--purple);
+    font-family:Arial, Helvetica, sans-serif;
+    font-weight:600;
+    font-size:1.05rem;
+    margin:0 0 4px;
+  }
+  header p.credit{
+    color:#9a9a94;
+    font-size:0.85rem;
+    margin:10px 0 0;
+  }
+
+  /* ---------- NAV ---------- */
+  .tabbar{
+    position:sticky; top:0; z-index:50;
+    display:flex; justify-content:center; gap:10px;
+    background:var(--cream);
+    padding:16px 12px;
+    border-bottom:2px solid var(--black);
+  }
+  .tab-btn{
+    font-family:Arial, Helvetica, sans-serif;
+    font-weight:700;
+    font-size:0.95rem;
+    padding:10px 26px;
+    border-radius:100px;
+    border:2px solid var(--black);
+    background:var(--white);
+    color:var(--black);
+    cursor:pointer;
+    transition:all .15s ease;
+  }
+  .tab-btn.active{
+    background:var(--black);
+    color:var(--lime);
+  }
+  .tab-btn:hover{transform:translateY(-2px);}
+
+  main{max-width:940px; margin:0 auto; padding:40px 24px 100px;}
+  .view{display:none;}
+  .view.active{display:block;}
+
+  section.intro-block{
+    margin-bottom:32px;
+  }
+  section.intro-block h2{
+    font-size:1.5rem;
+  }
+  section.intro-block p{
+    max-width:680px;
+  }
+
+  .badge{
+    display:inline-block;
+    background:var(--lime);
+    color:var(--black);
+    font-family:Arial, Helvetica, sans-serif;
+    font-weight:700;
+    font-size:0.75rem;
+    text-transform:uppercase;
+    letter-spacing:0.04em;
+    padding:5px 14px;
+    border-radius:100px;
+    margin-bottom:14px;
+  }
+
+  .callout{
+    background:rgba(140,147,217,0.15);
+    border:2px solid var(--purple);
+    border-radius:14px;
+    padding:14px 18px;
+    font-size:0.9rem;
+    max-width:680px;
+    margin-top:10px;
+  }
+
+  /* ---------- PROCESO TIMELINE (interactiva) ---------- */
+  .timeline{
+    position:relative;
+    display:flex; flex-direction:column; gap:14px;
+    margin-top:28px;
+    padding-left:30px;
+  }
+  .timeline::before{
+    content:"";
+    position:absolute;
+    left:11px; top:8px; bottom:8px;
+    width:3px;
+    background:var(--black);
+  }
+  .step{
+    position:relative;
+    background:var(--white);
+    border:2px solid var(--black);
+    border-radius:16px;
+    overflow:hidden;
+  }
+  .step:nth-child(odd){border-left:8px solid var(--lime);}
+  .step:nth-child(even){border-left:8px solid var(--purple);}
+  .step::before{
+    content:"";
+    position:absolute;
+    left:-30px; top:24px;
+    width:14px; height:14px;
+    border-radius:50%;
+    background:var(--black);
+    border:3px solid var(--cream);
+  }
+  .step-header{
+    display:flex; align-items:center; gap:16px;
+    padding:18px 20px;
+    cursor:pointer;
+    user-select:none;
+  }
+  .step-header:hover{background:rgba(200,240,0,0.12);}
+  .step .num{
+    font-family:Arial, Helvetica, sans-serif;
+    font-weight:900;
+    font-size:1.7rem;
+    color:var(--purple);
+    min-width:48px;
+  }
+  .step:nth-child(odd) .num{color:var(--black); -webkit-text-stroke:1px var(--lime);}
+  .step-header h3{
+    margin:0;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:1.1rem;
+    flex:1;
+  }
+  .chevron{
+    font-size:1.1rem;
+    font-weight:700;
+    transition:transform .2s ease;
+    color:var(--black);
+    flex-shrink:0;
+  }
+  .step.open .chevron{transform:rotate(180deg);}
+  .step-detail{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .3s ease;
+  }
+  .step.open .step-detail{max-height:600px;}
+  .step-detail-inner{
+    padding:0 20px 20px 84px;
+  }
+  .step-detail-inner p{margin:0 0 8px; font-size:0.94rem; color:#333;}
+  .step-detail-inner p:last-child{margin-bottom:0;}
+  .step-detail-inner ul{margin:8px 0 0; padding-left:18px; font-size:0.9rem; color:#333;}
+  .step-detail-inner ul li{margin-bottom:3px;}
+  .step-detail-inner a{color:var(--black); font-weight:700;}
+  .step-tpls{
+    margin-top:14px;
+    padding-top:14px;
+    border-top:1px dashed #999;
+  }
+  .step-tpls-label{
+    display:block;
+    font-size:0.78rem;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:0.03em;
+    color:#666;
+    margin-bottom:8px;
+  }
+  .tpl-chip{
+    display:inline-block;
+    background:var(--white);
+    border:2px solid var(--black);
+    border-radius:100px;
+    font-family:Arial, Helvetica, sans-serif;
+    font-weight:700;
+    font-size:0.8rem;
+    padding:6px 14px;
+    margin:0 6px 6px 0;
+    cursor:pointer;
+  }
+  .tpl-chip:hover{background:var(--lime);}
+
+  /* ---------- CRITERIOS / PROTOCOLOS ---------- */
+  .protocol-list{
+    display:flex; flex-direction:column; gap:16px;
+    margin-top:26px;
+  }
+  .protocol-card{
+    display:flex; gap:16px;
+    background:var(--white);
+    border:2px solid var(--black);
+    border-radius:16px;
+    padding:20px 22px;
+  }
+  .protocol-card:nth-child(odd){border-left:8px solid var(--purple);}
+  .protocol-card:nth-child(even){border-left:8px solid var(--lime);}
+  .protocol-card .p-icon{font-size:1.6rem; line-height:1;}
+  .protocol-card h3{
+    margin:0 0 8px;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:1.05rem;
+  }
+  .protocol-card .situacion{
+    display:inline-block;
+    font-size:0.7rem;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:0.04em;
+    color:#666;
+    margin-bottom:4px;
+  }
+  .protocol-card p{margin:0 0 4px; font-size:0.92rem; color:#333;}
+  .protocol-card p:last-child{margin-bottom:0;}
+  .protocol-card .accion{font-weight:700; color:var(--black);}
+
+  /* ---------- TEMPLATES ---------- */
+  .cat-nav{
+    display:flex; flex-wrap:wrap; gap:10px;
+    margin:24px 0 8px;
+  }
+  .cat-btn{
+    font-family:Arial, Helvetica, sans-serif;
+    font-weight:600;
+    font-size:0.85rem;
+    padding:8px 18px;
+    border-radius:100px;
+    border:2px solid var(--black);
+    background:var(--white);
+    cursor:pointer;
+  }
+  .cat-btn.active{background:var(--purple); color:var(--black);}
+
+  .cat-title{
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:1.3rem;
+    margin:32px 0 4px;
+    padding-top:8px;
+  }
+  .cat-desc{margin:0 0 16px; color:#444; font-size:0.9rem;}
+
+  .card-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
+    gap:18px;
+  }
+  .tpl-card{
+    background:var(--white);
+    border:2px solid var(--black);
+    border-radius:14px;
+    padding:18px;
+    cursor:pointer;
+    transition:transform .15s ease, box-shadow .15s ease;
+    transform:rotate(var(--r,-1deg));
+    position:relative;
+  }
+  .tpl-card:nth-child(2n){--r:1deg;}
+  .tpl-card:nth-child(3n){--r:-0.5deg;}
+  .tpl-card:hover{
+    transform:rotate(0deg) translateY(-3px);
+    box-shadow:6px 6px 0 var(--black);
+  }
+  .tpl-card .icon{font-size:1.4rem; margin-bottom:8px; display:block;}
+  .tpl-card h4{
+    margin:0 0 6px;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:1rem;
+  }
+  .tpl-card span.open{
+    display:inline-block;
+    margin-top:8px;
+    font-size:0.78rem;
+    font-weight:600;
+    color:var(--black);
+    background:var(--lime);
+    padding:3px 10px;
+    border-radius:100px;
+  }
+
+  /* ---------- MODAL ---------- */
+  .overlay{
+    display:none;
+    position:fixed; inset:0;
+    background:rgba(10,10,10,0.55);
+    z-index:100;
+    align-items:center; justify-content:center;
+    padding:20px;
+  }
+  .overlay.active{display:flex;}
+  .modal{
+    background:var(--cream);
+    border:3px solid var(--black);
+    border-radius:20px;
+    max-width:640px; width:100%;
+    max-height:85vh;
+    display:flex; flex-direction:column;
+    box-shadow:10px 10px 0 var(--purple);
+  }
+  .modal-head{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:18px 22px;
+    border-bottom:2px solid var(--black);
+  }
+  .modal-head h3{
+    margin:0;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:1.15rem;
+  }
+  .modal-close{
+    background:var(--black); color:var(--lime);
+    border:none; width:32px; height:32px; border-radius:50%;
+    font-size:1rem; cursor:pointer;
+  }
+  .modal-body{
+    padding:20px 22px;
+    overflow-y:auto;
+  }
+  .modal-body pre{
+    white-space:pre-wrap;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:0.88rem;
+    line-height:1.6;
+    background:var(--white);
+    border:2px solid var(--black);
+    border-radius:12px;
+    padding:16px;
+    margin:0;
+  }
+  .modal-foot{
+    padding:16px 22px 20px;
+    display:flex; justify-content:flex-end; gap:10px;
+  }
+  .copy-btn{
+    font-family:Arial, Helvetica, sans-serif;
+    font-weight:700;
+    font-size:0.9rem;
+    background:var(--black);
+    color:var(--lime);
+    border:2px solid var(--black);
+    padding:10px 22px;
+    border-radius:100px;
+    cursor:pointer;
+  }
+  .copy-btn:hover{background:var(--lime); color:var(--black);}
+  .copy-btn.copied{background:var(--purple); color:var(--black); border-color:var(--black);}
+
+  footer{
+    text-align:center;
+    padding:30px 20px 50px;
+    color:#555;
+    font-size:0.85rem;
+  }
+  footer .heart{color:var(--black);}
+
+  @media(max-width:600px){
+    header h1{font-size:1.5rem;}
+    .step-detail-inner{padding-left:20px;}
+    .timeline{padding-left:24px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <svg class="sunburst" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    <g stroke="#C8F000" stroke-width="4">
+      <line x1="100" y1="100" x2="100" y2="0"/>
+      <line x1="100" y1="100" x2="100" y2="200"/>
+      <line x1="100" y1="100" x2="0" y2="100"/>
+      <line x1="100" y1="100" x2="200" y2="100"/>
+      <line x1="100" y1="100" x2="30" y2="30"/>
+      <line x1="100" y1="100" x2="170" y2="30"/>
+      <line x1="100" y1="100" x2="30" y2="170"/>
+      <line x1="100" y1="100" x2="170" y2="170"/>
+    </g>
+  </svg>
+  <svg class="sunburst2" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    <g fill="#8C93D9" opacity="0.85">
+      <polygon points="100,10 130,100 70,100"/>
+      <polygon points="100,190 130,100 70,100" opacity="0.6"/>
+      <polygon points="10,100 100,130 100,70" opacity="0.75"/>
+    </g>
+  </svg>
+  <div class="logo blocky">✦</div>
+  <h1 class="rounded">Mi Proceso de Selección &amp; Biblioteca de Templates</h1>
+  <p class="sub">Tu versión personal, para hacerla tuya desde el día uno</p>
+  <p class="credit">Un regalo de Kodo HR para la Edición 1.26 🖤 — reemplazá lo que está entre [corchetes] y adaptalo a tu forma de trabajar</p>
+</header>
+
+<div class="tabbar">
+  <button class="tab-btn active" data-view="proceso">📋 Proceso</button>
+  <button class="tab-btn" data-view="templates">✦ Templates</button>
+  <button class="tab-btn" data-view="criterios">🧭 Criterios</button>
+</div>
+
+<main>
+
+  <!-- ===================== PROCESO ===================== -->
+  <div id="proceso" class="view active">
+    <section class="intro-block">
+      <span class="badge">De punta a punta</span>
+      <h2 class="rounded">Así podés laburar cada búsqueda</h2>
+      <p>Este es el recorrido completo de una búsqueda, de punta a punta — desde que entra el pedido hasta el día de ingreso, con todo lo que vimos en la Formación en el medio. Cada paso tiene sus templates asociados, los encontrás en la pestaña Templates.</p>
+      <div class="callout">Esto no es una receta cerrada — es la base que armamos juntas. Sumale, sacale o reordená pasos según tu contexto, tu equipo y tus clientes.</div>
+    </section>
+
+    <p class="cat-desc" style="margin-top:-10px;">👉 Tocá cada paso para ver el detalle.</p>
+
+    <div class="timeline" id="timeline"></div>
+  </div>
+
+  <!-- ===================== TEMPLATES ===================== -->
+  <div id="templates" class="view">
+    <section class="intro-block">
+      <span class="badge">Copiar y pegar</span>
+      <h2 class="rounded">Biblioteca de templates</h2>
+      <p>Tocá cualquier card para abrir el template completo y copiarlo con un click. Reemplazá lo que está entre [corchetes] por la info real de cada búsqueda — y donde diga [Tu Empresa] o [Tu Nombre], poné los tuyos.</p>
+    </section>
+
+    <div class="cat-nav">
+      <button class="cat-btn active" data-cat="all">Todos</button>
+      <button class="cat-btn" data-cat="general">Gestión general</button>
+      <button class="cat-btn" data-cat="ia">Prompts de IA</button>
+      <button class="cat-btn" data-cat="cliente">Cliente / Hiring Manager</button>
+      <button class="cat-btn" data-cat="candidatos">Candidatos</button>
+    </div>
+
+    <div id="tpl-container"></div>
+  </div>
+
+  <!-- ===================== CRITERIOS / PROTOCOLOS ===================== -->
+  <div id="criterios" class="view">
+    <section class="intro-block">
+      <span class="badge">Cómo resolvemos</span>
+      <h2 class="rounded">Criterios &amp; Protocolos de acción</h2>
+      <p>Situaciones que se repiten en cualquier búsqueda. Tenerlas resueltas de antemano — siempre de la misma manera — es lo que te permite actuar rápido y con criterio, sin tener que reinventar la respuesta cada vez.</p>
+    </section>
+
+    <div id="protocol-container"></div>
+  </div>
+
+</main>
+
+<div class="overlay" id="overlay">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 id="modal-title" class="rounded"></h3>
+      <button class="modal-close" id="modal-close">✕</button>
+    </div>
+    <div class="modal-body">
+      <pre id="modal-content"></pre>
+    </div>
+    <div class="modal-foot">
+      <button class="copy-btn" id="modal-copy">📋 Copiar template</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  Formación Reclutamiento Estratégico · Edición 1.26 — hecho con <span class="heart">🖤</span> por Kodo HR
+</footer>
+
+<script>
+const templates = [
+  // ---- GESTIÓN GENERAL ----
+  {
+    id:"jd-interna", cat:"general", icon:"📝", title:"Relevamiento de vacante (Discovery Call)",
+    content:`Empresa: [nombre] — [industria / tamaño / cultura en 1 línea]
+Momento del negocio: [qué está pasando en la empresa que motiva esta búsqueda]
+Contexto de la búsqueda: [por qué se abre el rol, cómo impacta en el negocio, urgencia real]
+Tipo de búsqueda: [ ] Reemplazo  [ ] Rol nuevo
+Nombre del rol / seniority:
+Reporta a:
+Gente a cargo: [sí/no — cuántas personas]
+Misión del rol: [qué resuelve, en 1-2 líneas]
+
+Responsabilidades principales:
+-
+-
+-
+
+Requisitos excluyentes:
+-
+-
+
+Requisitos deseables:
+-
+
+Banda salarial: [bruto/neto — moneda]
+Beneficios:
+Modalidad: [presencial/híbrido/remoto — días]
+Ubicación:
+Fecha estimada de inicio:
+
+Preguntas para ir más allá de la JD:
+- ¿Por qué se abre esta búsqueda justo ahora?
+- ¿Qué pasó con la última persona en este rol (si es reemplazo)?
+- ¿Qué hace que alguien fracase en este puesto, más allá del expertise técnico?
+- ¿Cómo describirías la cultura del equipo en una charla informal, no en el manual?
+
+Dudas / a validar con cliente:
+-
+
+Perfiles de calibración (2-3):
+1. [nombre/link + por qué se eligió]
+2.
+3. `
+  },
+  {
+    id:"esquema-reunion", cat:"general", icon:"🤝", title:"Esquema de Discovery Call con cliente",
+    content:`QUÉ LLEVÁS
+- Relevamiento preliminar completo
+- 2-3 perfiles de calibración
+- Dudas puntuales relevadas
+
+QUÉ NECESITÁS VALIDAR EN LA REUNIÓN
+- Contexto de negocio y por qué se abre la búsqueda
+- JD final (ajustes sobre la preliminar)
+- Proceso: cantidad de entrevistas, con quién, modalidad, tiempos
+- Disponibilidad horaria de los entrevistadores
+- Preocupacionales: si aplican, cómo se gestionan
+- Timing esperado de la primera terna
+- Canal de comunicación y otros interlocutores
+
+NO PUEDE FALTAR AL CIERRE DE LA REUNIÓN
+- JD aprobada
+- Próximos pasos y fecha de la próxima terna acordada`
+  },
+  {
+    id:"esquema-entrevista", cat:"general", icon:"🎤", title:"Esquema de entrevista con candidatos",
+    content:`APERTURA (5 min)
+Presentación propia + contexto de tu rol/consultora en el proceso.
+
+CONTEXTO DE EMPRESA Y ROL (5-10 min)
+Momento del negocio, por qué se abre la búsqueda, misión del rol.
+
+VALIDACIÓN DE PERFIL (20-25 min)
+[Preguntas específicas según los requisitos/criterios del rol — completar por búsqueda. Ver la Guía de preguntas por arquetipo para el bloque comportamental]
+-
+-
+-
+
+ESPACIO ABIERTO (10 min)
+"Contame lo que quieras sumar que no te pregunté."
+
+CIERRE
+Próximos pasos del proceso + timing esperado.`
+  },
+  {
+    id:"guia-arquetipos", cat:"general", icon:"🎭", title:"Guía de preguntas por arquetipo (STAR)",
+    content:`MÉTODO STAR — para armar cualquier pregunta comportamental
+Situación → Tarea → Acción → Resultado. La pregunta pide un caso real, no una opinión general ("contame de una vez que..." en vez de "¿qué harías si...?").
+
+PREGUNTAS POR COMPETENCIA (adaptá según lo que valide cada rol)
+
+Liderazgo / gestión de equipo
+- "Contame de una vez que tuviste que dar una devolución difícil a alguien de tu equipo. ¿Qué pasó y cómo lo resolviste?"
+
+Resolución de problemas
+- "Contame de un problema inesperado que tuviste que resolver con poco tiempo o poca información. ¿Qué hiciste?"
+
+Trabajo bajo presión / prioridades
+- "Contame de una situación con varias urgencias al mismo tiempo. ¿Cómo decidiste qué iba primero?"
+
+Manejo de conflictos
+- "Contame de un desacuerdo real con un par o un jefe. ¿Cómo lo manejaste y qué aprendiste?"
+
+Adaptabilidad al cambio
+- "Contame de un cambio grande (de proceso, de equipo, de prioridades) que te tocó atravesar. ¿Cómo te adaptaste?"
+
+REPREGUNTAS QUE SIEMPRE SUMAN
+- "¿Qué harías distinto si lo tuvieras que volver a hacer?"
+- "¿Cómo se enteró el resto del equipo o tu jefe? ¿Qué feedback recibiste?"
+- Si la respuesta es muy general: "Dame un ejemplo concreto de eso que decís."
+
+SEÑALES A OBSERVAR
+- Habla en "nosotros" todo el tiempo y nunca en "yo" → indagar cuál fue su rol real.
+- No aparece autocrítica en ningún ejemplo → repreguntar por un aprendizaje o error concreto.
+- La respuesta es teórica ("yo en general...") en vez de un caso puntual → volver a pedir un ejemplo real.`
+  },
+  {
+    id:"boolean-template", cat:"general", icon:"🔍", title:"Constructor de Boolean String",
+    content:`ESTRUCTURA BÁSICA
+
+("[Puesto]" OR "[Sinónimo 1]" OR "[Sinónimo 2]")
+AND ("[Skill/herramienta clave 1]" OR "[Skill/herramienta clave 2]")
+AND ("[Ubicación]" OR "[Ubicación alternativa]")
+NOT ("[Palabra a excluir — ej. 'pasante', 'junior' si buscás senior]")
+
+EJEMPLO APLICADO
+("Analista de Datos" OR "Data Analyst" OR "Business Intelligence Analyst")
+AND ("SQL" OR "Power BI" OR "Tableau")
+AND ("Buenos Aires" OR "CABA" OR "AMBA")
+NOT ("pasante" OR "trainee")
+
+TIPS
+- Empezá amplio y andá cerrando: si trae pocos resultados, sacá un AND. Si trae demasiado ruido, sumá un NOT.
+- Los sinónimos importan tanto como el puesto — pensá cómo se autodenomina la persona en su perfil, no solo cómo lo llama la búsqueda.
+- Para X-ray en Google: site:linkedin.com/in/ + el mismo string entre comillas.`
+  },
+  {
+    id:"guia-negociacion", cat:"general", icon:"💬", title:"Guía de Offer y Negociación",
+    content:`INSUMOS A RELEVAR DURANTE TODO EL PROCESO (no solo al final)
+- Expectativa salarial explícita: qué número dijo, con qué firmeza lo dijo ("necesito" no es lo mismo que "me gustaría"), y contra qué lo comparó.
+- Paquete actual y beneficios: sueldo + beneficios — qué tiene hoy y qué es lo que más valora de eso.
+- Motivador real del cambio: plata, techo de crecimiento, clima, propósito, flexibilidad.
+- Geografía y logística: vive cerca o lejos, qué modalidad tiene hoy y cuál ofrece la vacante.
+- Otros procesos en danza: si está en otros procesos y en qué etapa.
+- Vínculo con su empresa actual: se va "hacia" algo (pull) o "de" algo (push) — define qué tan vulnerable es a una contraoferta.
+
+ANTES DE MANDAR LA PROPUESTA AL CLIENTE
+Cruzá la expectativa contra lo que se va a ofrecer, y el motivador dominante contra lo que la oferta realmente resuelve. Si el cliente insiste en una oferta que sabés que no va a cerrar, decíselo con el dato en la mano — no la ejecutes en silencio.
+
+CÓMO COMUNICAR LA OFERTA
+1. Nunca solo por mail en frío — siempre llamada antes.
+2. Después, la propuesta formal sí va por mail: eso le da seguridad y respaldo al candidato/a, algo a lo que volver.
+3. Arrancá reforzando el motivador real, no el número.
+4. Preguntá la contraoferta antes de que pase: "si tu empresa actual te iguala esto hoy, ¿te quedás?"
+
+VARIABLES QUE SE NEGOCIAN ADEMÁS DEL SUELDO
+Fecha de inicio · Modalidad de trabajo · Título del puesto · Revisión salarial a los 6 meses · Bono de firma · Presupuesto de capacitación · Día extra de home office.
+Abrí estas variables con el cliente antes de cerrar la conversación con el candidato — no las descubras reactivamente cuando ya dijo que no.`
+  },
+  {
+    id:"reporte-metricas", cat:"general", icon:"📈", title:"Mini reporte de gestión — Métricas clave",
+    content:`REPORTE DE GESTIÓN — [Período / búsqueda]
+
+NPS Cliente: [ ] → % promotores − % detractores de la encuesta post-cierre.
+NPS Candidato: [ ] → mismo cálculo, encuestando a quienes pasaron por el proceso (elegidos y no elegidos).
+Time to Hire: [ ] días → desde apertura de la búsqueda hasta aceptación de la oferta.
+Eficiencia Interna: [ ] Postulaciones : [ ] Entrevistas propias : [ ] Ternados → qué tan afinado está tu sourcing.
+Entendí la necesidad: [ ] Ternados : [ ] Entrevistados por el cliente → qué tan bien decodificaste el brief.
+Percepción de eficiencia del cliente: [ ] entrevistas que el cliente necesitó para elegir → 3-4 es lo esperable; menos es señal de altísima eficiencia; 5 o más puede empezar a sentirse pesado para el cliente.
+Eficiencia General: [ ] entrevistas propias para llegar al elegido → tu productividad real de punta a punta.
+
+LECTURA RÁPIDA
+- Ninguna métrica se lee sola — cruzalas. Un Time to Hire alto con una Eficiencia Interna sana puede significar que el cliente tardó en decidir, no que vos trabajaste lento.
+- Las métricas de proceso (Eficiencia Interna, Entendí la necesidad, Eficiencia General) son para vos: te muestran dónde está el cuello de botella.
+- El NPS y la Percepción de eficiencia del cliente son las que llevás a la conversación con el cliente — son tu argumento para defender tarifas, alcance y confianza a largo plazo.`
+  },
+
+  // ---- PROMPTS DE IA ----
+  {
+    id:"prompt-analisis-4c", cat:"ia", icon:"🧠", title:"Prompt de análisis de candidatos (4C)",
+    content:`CONTEXTO
+Sos una asistente de análisis para un proceso de selección. Estoy evaluando candidatos para el rol de [Nombre del rol] en [Empresa]. Te comparto la JD aprobada y la información relevada de cada candidato (CV, LinkedIn, notas de la entrevista).
+
+CONTENIDO
+JD aprobada:
+[Pegar JD completa: misión del rol, responsabilidades, requisitos excluyentes y deseables, banda salarial, modalidad]
+
+Candidatos a analizar:
+Candidato 1 – [Nombre]: [Pegar CV / resumen / notas de entrevista]
+Candidato 2 – [Nombre]: [Pegar CV / resumen / notas de entrevista]
+Candidato 3 – [Nombre]: [Pegar CV / resumen / notas de entrevista]
+
+CRITERIO
+Para cada candidato, evaluá:
+1. Fit con los requisitos excluyentes (uno por uno: cumple o no, y por qué).
+2. Fit con los requisitos deseables.
+3. Fortalezas específicas para el desafío del rol (con evidencia concreta del CV/entrevista, no genérica).
+4. Señales de riesgo o alertas (gaps, expectativa salarial fuera de banda, motivadores de cambio poco claros, etc.).
+5. Comparación relativa: ordená a los candidatos de mayor a menor fit para este rol puntual, explicando la razón de cada posición en el ranking.
+
+COMPROBACIÓN
+Antes de responder:
+- Citá evidencia textual concreta de cada CV/nota para cada afirmación — no generalices sin sustento.
+- Marcá explícitamente los supuestos que estés haciendo si falta información.
+- Señalá qué información adicional habría que relevar en una segunda instancia antes de armar la terna.
+- Si algún candidato no cumple un excluyente, decilo de forma directa, sin suavizarlo.`
+  },
+  {
+    id:"prompt-copy-4c", cat:"ia", icon:"✍️", title:"Prompt: Mensaje de abordaje (4C)",
+    content:`CONTEXTO
+Sos una asistente de copywriting para reclutamiento. Necesito un mensaje de primer contacto para [Nombre/perfil del candidato] sobre la búsqueda de [Rol] en [Empresa/industria]. El desafío principal del rol es [desafío].
+
+CONTENIDO
+Perfil del candidato (de su CV/LinkedIn): [pegar resumen]
+Qué de su experiencia conecta con el rol: [punto concreto]
+
+CRITERIO
+- Tono cercano y directo, como si lo escribiera una persona, no un bot de RRHH.
+- Máximo 4-5 líneas.
+- Personalizado con algo específico de su trayectoria — nada de "vi tu perfil y me pareció interesante".
+- Dame 3 variantes con enfoques distintos (una más directa, una más centrada en el desafío del rol, una más breve).
+
+COMPROBACIÓN
+Revisá que ninguna variante suene genérica o que podría mandarse a cualquier persona — si alguna frase no depende de este candidato puntual, señalala.`
+  },
+  {
+    id:"prompt-boolean-ia", cat:"ia", icon:"🧭", title:"Prompt: Expandir Boolean con IA",
+    content:`CONTEXTO
+Estoy armando la búsqueda booleana para sourcear candidatos para el rol de [Nombre del rol] en [Empresa/industria]. Ya tengo una primera versión del string y quiero ampliarla.
+
+CONTENIDO
+Mi string actual: [pegar boolean actual]
+Descripción del perfil que busco: [pegar requisitos excluyentes y deseables de la JD]
+
+CRITERIO
+- Sugerime sinónimos y variantes del puesto que usaría la gente real en su perfil de LinkedIn (no solo el nombre "oficial" del cargo).
+- Sugerime herramientas/tecnologías relacionadas que alguien con este perfil probablemente mencione, aunque no estén en la JD original.
+- Marcame palabras que convenga excluir con NOT para filtrar ruido (perfiles junior si busco senior, u otras industrias que usan terminología similar).
+
+COMPROBACIÓN
+Antes de responder, explicame brevemente el razonamiento detrás de cada sugerencia — no quiero solo la lista, quiero poder decidir cuáles uso.`
+  },
+  {
+    id:"prompt-informe-perfil", cat:"ia", icon:"📝", title:"Prompt: Informe de Perfil",
+    content:`Prompt para pegar en una IA — junto con el CV, la entrevista/notas y las respuestas de postulación del candidato/a — para que arme el informe de perfil con un estándar de diseño y contenido consistente.
+
+ROL
+Actuás como reclutadora senior de [Tu Empresa/Consultora] armando el informe de perfil de un/a candidato/a para [nombre de la búsqueda / puesto / cliente]. Tu única fuente de verdad es el CV, la entrevista y las respuestas de postulación que te paso — no inventes ni asumas nada que no esté ahí. Si algo no lo sabés, decilo, no lo completes con supuestos.
+
+ANTES DE ESCRIBIR: DEFINÍ LOS EJES DEL ROL
+Antes de armar el primer informe de una búsqueda, definí entre 4 y 6 "focos del rol" a partir del perfil de búsqueda / JD del cliente — los desafíos y competencias que realmente definen el éxito en ese puesto. Usá exactamente los mismos ejes, con el mismo texto, en todos los informes de esa búsqueda, para poder comparar candidatos entre sí. No los reformules de un candidato a otro.
+
+Ejemplo (Coordinador/a de Centro Médico): Experiencia en salud / instituciones médicas · Liderazgo y gestión de equipo de atención al cliente · Coordinación operativa de agenda y staff · Administración: caja, facturación y obras sociales · Perfil resolutivo con público exigente.
+
+ESTRUCTURA FIJA DEL INFORME
+1. Header: [TU LOGO/NOMBRE] ✦ INFORME DE PERFIL / Nombre completo / Puesto · Cliente
+2. Enlace a CV y a LinkedIn
+3. RESUMEN — 4 líneas de síntesis de persona/experiencia/formación, objetiva y que se alinea con la necesidad del rol. No adelantes acá el detalle que vas a dar después. No hagas apreciaciones ni conclusiones propias — es solo informativo/representativo.
+4. ALINEACIÓN CON DESAFÍOS CLAVE — tabla de 2 columnas (Foco del Rol / Experiencia Validada en Entrevista) con los ejes fijos de la búsqueda. En cada fila, andá directo al grano: si tiene o no la experiencia, cómo, por qué, y un caso de éxito breve si se mencionó — con evidencia concreta y fáctica del CV, la entrevista o la postulación. Sin calificaciones tipo "Fit: Alto/Medio/Bajo": la evidencia tiene que hablar por sí sola.
+5. PERFIL Y ASPECTOS A CONSIDERAR — Trayectoria (incluí siempre una lectura de estabilidad: años por empleador, patrones de permanencia o salida) + Motivación de Cambio + si hay, cuestiones a considerar en relación a eso + indicios de match cultural con el equipo/la empresa, si surgieron.
+6. COMPETENCIAS DESTACADAS — 3 bullets con lo más diferencial del perfil en relación al rol (según el caso, va a estar más enfocado en lo soft o en lo hard), no genérico.
+7. LOGÍSTICA Y COMPENSACIÓN — zona de residencia, movilidad, compensación, beneficios esperados/valorados, disponibilidad (ingreso/entrevista), viajes programados. Lo que no se relevó, se marca como tal, no se completa.
+8. ANÁLISIS Y/O CONSIDERACIONES — Potencial vs. Experiencia, Motivación y Retención, Fit con el Equipo y, si aplica, Procesos y profesionalización.
+9. REFERENCIAS LABORALES (siempre el último apartado) — esta sección va SIEMPRE en el informe, no es opcional. Lo que varía es si la persona tiene LinkedIn (u otro respaldo) que confirme que la referencia fue efectivamente contemporánea a esa relación laboral: persona que haya supervisado directa o indirectamente al/a la candidato/a. Criterio de relleno: si hay ese respaldo, indicar nombre, rol y empresa de la referencia. Si no lo hay o no se pudo confirmar, la sección igual queda, pero se indica que no se pudo validar — no completar ni inventar el dato.
+
+(4 y 6 responden al match técnico del perfil; 5 responde al match cultural — tenelo presente al decidir cuánto desarrollar cada uno según lo que haya surgido.)
+
+REGLAS DE REDACCIÓN
+- Realismo y objetividad: basá cada afirmación únicamente en los datos provistos. No infles al candidato, no uses adulaciones ("increíble") ni frases extremistas.
+- No inventar ni suponer: si algo no lo sabés, decí que no lo sabés — no lo completes.
+- Gaps en positivo: si detectás que le falta experiencia en algún área, sé transparente, pero planteálo desde cómo su otra experiencia lo compensa o aporta un plus distinto.
+- Casos de éxito concretos: incluí ejemplos que sustenten lo que dice el candidato — el hiring manager no tiene acceso a la entrevista, no des por sentado que entiende de qué estás hablando si no lo explicás.
+- Anti-relleno: no completes una sección solo porque "hay que llenarla". Si dos secciones dirían lo mismo, fusionalas o recortá una. Cada bullet suma información nueva; si no hay nada nuevo que decir, escribís menos, no relleno.
+- Sin dudas sueltas sobre compromiso: en "Análisis y/o Consideraciones" no dejes preguntas abiertas que generen dudas sobre el compromiso del candidato/a porque sí. Si hay algo pendiente de validar, apoyalo en la evidencia que ya tenés a favor (trayectoria, patrones de comportamiento) en vez de dejarlo como una alerta suelta.
+
+VOCABULARIO Y TONO
+- Tono neutral y descriptivo, cercano y cálido, sin perder profesionalidad.
+- Vocabulario ejecutivo y ágil: cuidá los coloquialismos según el cliente al que le vaya a llegar.
+- Cero humo corporativo/robótico: evitar frases vacías que suenan bien pero no aportan nada fáctico.
+- Nunca garantizar el futuro: si trabajás como consultora externa, no podés dar certezas sobre el desempeño futuro de nadie. Evitá "garantiza" / "asegura".
+- No comparar candidatos entre sí dentro de un informe, salvo que sea un pedido expreso.
+
+DISEÑO (si el informe se entrega en Word/Doc)
+Definí acá tu propia identidad visual y sé consistente en todos los informes: tu fuente, tu paleta de colores (2-3 colores fijos para headers/barras de sección), cómo se ve tu header (logo/nombre + nombre del candidato + puesto·cliente) y tu footer (contacto). Una vez que la definas, replicala igual en cada informe — es lo que hace que tu marca se sienta profesional y reconocible.`
+  },
+
+  // ---- CLIENTE / HIRING MANAGER ----
+  {
+    id:"correo-kickoff", cat:"cliente", icon:"🚀", title:"Correo de kickoff a cliente",
+    content:`Asunto: ¡Arrancamos con la búsqueda de [Rol]! 🚀
+
+Hola [Nombre],
+
+¡Un gusto! Soy [Nombre], y voy a estar liderando la búsqueda de [Rol] para [Empresa].
+
+Estuve estudiando la posición con toda la info que nos compartiste/compartieron previamente, y me gustaría coordinar un breve meet para terminar de calibrar algunos puntos.
+
+Un ejercicio interesante para esto es que, en la medida de lo posible, puedas/n ver los perfiles que comparto a continuación (no son necesariamente candidatos del proceso, sirven para calibrar juntos qué sí y qué no):
+[Perfil 1 – link]
+[Perfil 2 – link]
+[Perfil 3 – link]
+
+¿Tenés disponibilidad esta semana? Te dejo mi calendario: [link]
+
+¡Nos vemos pronto! 🖤
+[Nombre] – [Tu Empresa]`
+  },
+  {
+    id:"jd-aprobada", cat:"cliente", icon:"✅", title:"JD aprobada (formato final)",
+    content:`Es el mismo documento que el relevamiento preliminar — ambas versiones son internas, esta es simplemente el estadio final una vez validado con el cliente en la Discovery Call / reunión de kickoff. La única versión que sale hacia afuera es la JD pública para candidatos.
+
+Empresa: [nombre] — [industria / tamaño / cultura en 1 línea]
+Momento del negocio: [qué está pasando en la empresa que motiva esta búsqueda]
+Contexto de la búsqueda: [por qué se abre el rol, cómo impacta en el negocio, urgencia]
+Tipo de búsqueda: [ ] Reemplazo  [ ] Rol nuevo
+Nombre del rol / seniority:
+Reporta a:
+Gente a cargo: [sí/no — cuántas personas]
+Misión del rol: [qué resuelve, en 1-2 líneas]
+
+Responsabilidades principales:
+-
+-
+-
+
+Requisitos excluyentes:
+-
+-
+
+Requisitos deseables:
+-
+
+Banda salarial: [bruto/neto — moneda]
+Beneficios:
+Modalidad: [presencial/híbrido/remoto — días]
+Ubicación:
+Fecha estimada de inicio:
+
+El proceso: [cantidad de instancias, con quién, timing estimado]
+
+Documento validado y aprobado por [Nombre cliente] – [fecha]`
+  },
+  {
+    id:"correo-terna", cat:"cliente", icon:"📋", title:"Correo de envío de terna",
+    content:`Asunto: Terna [Rol] – [N° de terna] 📋
+
+Hola [Nombre],
+
+Te comparto la primera terna para [Rol]. Armé el informe con el detalle de cada perfil para que puedas revisarlo con tranquilidad.
+
+[Adjunto: Informe de terna]
+
+Me encantaría conocer tu impresión: ¿con quién te gustaría avanzar? Contame cómo, cuándo y dónde te queda cómodo coordinar.
+
+Si hay algún perfil que no te cierra, me sirve mucho que me cuentes el motivo con el mayor detalle posible — me ayuda a afinar la búsqueda para la próxima ronda.
+
+Quedo atenta. ¡Gracias! 🖤
+[Nombre] – [Tu Empresa]`
+  },
+  {
+    id:"informe-terna", cat:"cliente", icon:"📊", title:"Informe de Perfil — modelo",
+    content:`Se arma un Informe de Perfil por cada candidato de la terna (uno por persona, mismo formato) — no es un único documento con los 3 perfiles listados. Esta estructura tiene que coincidir siempre con la que usás en tu "Prompt: Informe de Perfil" — son el mismo documento, uno es la plantilla y el otro el prompt para generarlo.
+
+Armá tu propio modelo de documento (Google Doc, Word o Canva) con este contenido y tu identidad visual, y guardá el link acá para reutilizarlo siempre: [Link a tu modelo]
+
+[TU LOGO/NOMBRE] ✦ INFORME DE PERFIL
+[Nombre completo del candidato]
+[Puesto] · [Cliente]
+
+CV: [link]
+LinkedIn: [link]
+
+RESUMEN
+[4 líneas de síntesis objetiva de persona, experiencia y formación, alineada con la necesidad del rol. Sin apreciaciones ni conclusiones propias — es informativo/representativo, no adelantar acá el detalle que viene después]
+
+ALINEACIÓN CON DESAFÍOS CLAVE
+Foco del Rol | Experiencia Validada en Entrevista
+[Foco clave 1 del rol — mismo texto en todos los informes de esta búsqueda, para poder comparar] | [Evidencia concreta y fáctica: tiene o no la experiencia, cómo, por qué, caso de éxito breve si se mencionó. Sin calificaciones tipo "Fit: Alto/Medio/Bajo" — la evidencia habla sola]
+[Foco clave 2 del rol] | [...]
+[Foco clave 3 del rol] | [...]
+[Foco clave 4 del rol] | [...]
+
+PERFIL Y ASPECTOS A CONSIDERAR
+Trayectoria: [evolución de carrera + lectura de estabilidad: años por empleador, patrones de permanencia o salida]
+Motivación de Cambio: [por qué se mueve de su posición actual/anterior; cuestiones a considerar en relación a eso, si las hay]
+Match cultural: [indicios de fit con el equipo/la empresa, si surgieron]
+
+COMPETENCIAS DESTACADAS
+- [Competencia 1 — lo más diferencial del perfil en relación al rol, con evidencia concreta, no genérico]
+- [Competencia 2]
+- [Competencia 3]
+
+LOGÍSTICA Y COMPENSACIÓN
+Zona de residencia: [...]
+Movilidad: [...]
+Compensación: [pretensión salarial]
+Beneficios esperados/valorados: [...]
+Disponibilidad para entrevista: [...]
+Disponibilidad para ingresar: [...]
+Viaje programado: [sí/no — fechas si aplica]
+[Lo que no se relevó, se marca como tal — no se completa]
+
+ANÁLISIS Y/O CONSIDERACIONES
+Potencial vs. Experiencia: [qué trae de más/de menos respecto al perfil ideal, y cómo lo compensa]
+Motivación y Retención: [qué tan alineada está la propuesta con sus objetivos de largo plazo — apoyado en evidencia, sin dudas sueltas sobre compromiso]
+Fit con el Equipo: [cómo encaja su estilo de trabajo con la dinámica del área/equipo]
+Procesos y profesionalización: [si aplica]
+
+REFERENCIAS LABORALES (siempre el último apartado — esta sección va siempre, no es opcional; lo que varía es si hay LinkedIn u otro respaldo para confirmarla)
+[Nombre, rol y empresa de la persona que supervisó directa o indirectamente al/a la candidato/a, si hay respaldo de que esa experiencia fue efectivamente contemporánea (ej: enlace a LinkedIn que lo confirme). Si no hay forma de confirmarlo, se indica que no se pudo validar — no se inventa el dato]`
+  },
+  {
+    id:"correo-definiciones", cat:"cliente", icon:"🎯", title:"Correo de solicitud de definiciones",
+    content:`Asunto: ¡Vamos por [Nombre candidato]! Necesitamos definir algunos puntos 🎯
+
+Hola [Nombre],
+
+¡Excelente noticia que quieran avanzar con [Nombre candidato]! Para poder cerrar el proceso, necesito que me ayudes a definir:
+
+PREOCUPACIONALES
+- ¿Los gestionan ustedes o los gestiono yo?
+- En caso de gestionarlos ustedes, ¿con quién coordino?
+
+OFERTA
+- ¿La envían ustedes o la armo yo con mi modelo?
+- Condiciones a confirmar: salario, beneficios, vacaciones, fecha preliminar de ingreso (sujeta a ok de preocupacionales)
+
+Apenas tengamos esto, avanzamos con [Nombre candidato] a toda velocidad 🚀
+
+¡Gracias! 🖤
+[Nombre] – [Tu Empresa]`
+  },
+  {
+    id:"offer-modelo", cat:"cliente", icon:"💼", title:"Modelo de Offer propia",
+    content:`Armá tu propio modelo visual (Word, Canva o similar) con este contenido, y guardá el link acá: [Link a tu modelo de Offer]
+
+PROPUESTA DE INCORPORACIÓN
+[Fecha]
+
+Estimado/a [Nombre candidato],
+
+En nombre de [Empresa cliente] ¡queremos darte la bienvenida! Es un gusto poder formalizar esta propuesta para que te sumes como [Rol].
+
+DETALLE DE LA PROPUESTA
+- Posición: [...]
+- Reporta a: [...]
+- Modalidad: [...]
+- Remuneración: [...]
+- Beneficios: [...]
+- Vacaciones: [...]
+- Fecha estimada de ingreso: [...] (sujeta a resultado de preocupacionales)
+
+Esta propuesta tiene validez hasta el [fecha]. Cualquier duda, estamos a disposición para conversarlo.
+
+¡Muchas ganas de que este próximo paso sea el inicio de algo grande! 🖤
+[Tu Nombre/Equipo], en representación de [Empresa cliente]`
+  },
+  {
+    id:"correo-oferta", cat:"cliente", icon:"🎉", title:"Correo de envío de oferta",
+    content:`Asunto: ¡Tu propuesta de [Empresa]! 🎉
+
+Hola [Nombre],
+
+¡Llegó el momento! Te adjunto la propuesta formal para sumarte a [Empresa] como [Rol].
+
+[Adjunto: Offer]
+
+Cualquier duda que tengas sobre las condiciones, estoy para ayudarte a resolverla. Quedo atenta a tu confirmación.
+
+¡Estoy re contenta de acompañarte en este paso! 🖤
+[Nombre] – [Tu Empresa]
+CC: [contacto cliente]`
+  },
+  {
+    id:"correo-hm-ficha", cat:"cliente", icon:"📄", title:"Correo a Hiring Manager con Ficha de Ingreso",
+    content:`Asunto: 🌟Todo listo para el lunes | Kit de Despegue de [Nombre de Ingresante]
+
+Hola, [Nombre Hiring Manager]! Espero que estés muy bien!
+
+Estamos en la cuenta regresiva para que [Nombre de Ingresante] se sume al equipo el próximo [Día de ingreso]. Estoy convencida de que su perfil [características del perfil] les aportará [aporte de valor relacionado a desafío de rol].
+
+🎁 Para que su aterrizaje sea un éxito desde el minuto cero, te preparé un regalo especial: la ficha de ingreso de [Nombre de Ingresante] — nosotras en la Formación lo llamamos "Smart Profile", ponele el nombre que quieras.
+
+No es un simple legajo, es un manual de uso rápido para vos como líder. Incluye:
+- Sus motivadores (qué la enciende).
+- Tips de liderazgo para potenciar su estilo.
+- Un tip de onboarding para sus primeros 15 días.
+
+Por último, para mí la mejora es constante. Te robo 2 minutos de reloj (literal) para que me cuentes cómo viviste la experiencia trabajando conmigo en esta búsqueda y seguir puliendo mi puntería:
+
+👉 Link a tu encuesta de satisfacción: [armá la tuya — un Google Form corto funciona bien]
+
+¡Gracias por confiar en mí en este proceso! 🖤`
+  },
+  {
+    id:"ficha-ingreso", cat:"cliente", icon:"🗂️", title:"Ficha de Ingreso",
+    content:`FICHA DE INGRESO – [Nombre candidato]
+Rol: [...] | Empresa: [...] | Fecha de ingreso: [...]
+
+SOBRE LA PERSONA
+Motivadores del cambio: [...]
+Estilo de trabajo / cómo le gusta que lo/a acompañen: [...]
+Fortalezas destacadas en el proceso: [...]
+Puntos de atención para el onboarding: [...]
+
+DATOS OPERATIVOS
+Disponibilidad horaria: [...]
+Modalidad acordada: [...]
+Info de contacto: [...]
+
+TU RECOMENDACIÓN
+[Tip breve para el hiring manager sobre cómo potenciar a esta persona desde el arranque]`
+  },
+
+  // ---- CANDIDATOS ----
+  {
+    id:"jd-publica", cat:"candidatos", icon:"✨", title:"JD pública para candidatos",
+    content:`[Nombre del rol] en [Empresa] ✨
+
+[1-2 líneas de gancho sobre el desafío del rol o el momento de la empresa]
+
+¿CUÁL ES EL DESAFÍO?
+[Misión del rol en tono cercano]
+
+¿QUÉ VAS A HACER?
+- [Responsabilidad 1]
+- [Responsabilidad 2]
+- [Responsabilidad 3]
+
+¿QUÉ BUSCAMOS EN VOS?
+- [Requisito excluyente 1]
+- [Requisito excluyente 2]
+- [Deseable]
+
+¿QUÉ TE OFRECEMOS?
+- [Beneficio 1] 🎯
+- [Beneficio 2]
+- [Modalidad]
+
+PREGUNTAS DE POSTULACIÓN
+1. [Pregunta filtro sobre experiencia excluyente]
+2. [Pregunta sobre motivación/disponibilidad]
+3. [Pregunta sobre pretensión salarial]
+
+FASES DEL PROCESO
+Postulación → Entrevista con vos → Entrevista [Empresa] → [Instancia adicional si aplica] → Oferta
+
+CRITERIOS DE SCORING
+[Qué respuestas puntúan alto/bajo para pre-filtrar automáticamente — se define por búsqueda]`
+  },
+  {
+    id:"msg-proactivo", cat:"candidatos", icon:"👋", title:"Mensaje proactivo (sourcing)",
+    content:`Hola [Nombre]! [Mi nombre] de [Tu Empresa] 👋 Estoy a cargo del rol de [Rol] en [Empresa], donde el principal desafío es [desafío]. Viendo tu experiencia en [experiencia puntual], creo que podés ser un gran match. Te dejo más info acá: [link a la publicación]. Si te copa, quedo a disposición para charlarlo en un meet. ¡Abrazo! 🖤`
+  },
+  {
+    id:"resp-avance", cat:"candidatos", icon:"🙌", title:"Respuesta a postulación — Avanza",
+    content:`Hola [Nombre]! Gracias por postularte a [Rol] 🙌 Ya vi tu perfil y quiero seguir conociéndote. Te propongo coordinar un meet — ¿tenés disponibilidad esta semana?`
+  },
+  {
+    id:"resp-no-avance", cat:"candidatos", icon:"🖤", title:"Respuesta a postulación — No avanza",
+    content:`Hola [Nombre]! Gracias por tu tiempo e interés en [Rol]. Después de revisar tu perfil, esta vez no vamos a avanzar porque [motivo puntual y constructivo]. Igual quedás en mi base para futuras búsquedas que puedan matchear mejor con tu perfil. ¡Éxitos! 🖤`
+  },
+  {
+    id:"feedback-avance", cat:"candidatos", icon:"➡️", title:"Feedback post entrevista — Avanza",
+    content:`Hola [Nombre]! Fue un gusto conocerte. Quiero avanzar a la próxima instancia: [detalle de próximo paso]. Te escribo a la brevedad para coordinar.`
+  },
+  {
+    id:"feedback-no-avance", cat:"candidatos", icon:"💬", title:"Feedback post entrevista — No avanza",
+    content:`Hola [Nombre]! Gracias por el tiempo dedicado a la entrevista. Esta vez no vamos a seguir adelante porque [feedback específico y de valor: ej. seniority, expectativa salarial, fit con el desafío puntual]. [Opcional: fortaleza destacada que le sirva a futuro]. Fue un gusto conocerte y espero que nos crucemos en otra oportunidad 🖤`
+  },
+  {
+    id:"correo-bienvenida", cat:"candidatos", icon:"🎉", title:"Correo de bienvenida/éxitos + encuesta",
+    content:`Asunto: ¡Hoy es el día! 🎉
+
+Hola [Nombre de Persona]
+
+¡Hoy es el día! Estoy súper contenta de que comiences oficialmente en [Nombre de Empresa].
+
+Desde [Tu Empresa], quiero felicitarte por este gran paso y desearte toda la suerte en esta nueva etapa.
+
+Sé que generalmente los primeros días pueden ser un poco intensos, pero estoy segura de que te vas a integrar súper bien y que tu energía va a sumar mucho al equipo!
+
+Antes de que te sumerjas en esta nueva aventura, me encantaría conocer cómo fue tu experiencia en el proceso de selección!
+
+Agradezco mucho tu feedback, así que te dejo el enlace para la encuesta: [Link a tu encuesta de satisfacción de candidatos]
+
+¡Mil gracias por compartir tus impresiones! Estoy segura de que la vas a romper en este nuevo desafío.
+
+¡Que tengas un excelente primer día!
+
+Abrazo!
+
+[Tu Nombre / Tu Equipo]`
+  }
+];
+
+const templatesById = {};
+templates.forEach(t=>{ templatesById[t.id] = t; });
+
+const catLabels = {
+  general:{title:"Gestión general", desc:"Guías y esquemas propios, para usar antes de que el cliente vea nada."},
+  ia:{title:"Prompts de IA (copiloto)", desc:"Prompts para usar con tu IA de preferencia. La IA acelera y sugiere — el criterio final siempre lo ponés vos."},
+  cliente:{title:"Cliente / Hiring Manager", desc:"Todo lo que se comunica hacia afuera con la empresa."},
+  candidatos:{title:"Candidatos", desc:"Mensajes y correos para cada etapa del candidato."}
+};
+
+const container = document.getElementById('tpl-container');
+
+function renderTemplates(filter){
+  container.innerHTML = "";
+  const cats = filter === "all" ? Object.keys(catLabels) : [filter];
+  cats.forEach(cat=>{
+    const items = templates.filter(t=>t.cat===cat);
+    if(!items.length) return;
+    const catTitle = document.createElement('h3');
+    catTitle.className = 'cat-title rounded';
+    catTitle.textContent = catLabels[cat].title;
+    const catDesc = document.createElement('p');
+    catDesc.className = 'cat-desc';
+    catDesc.textContent = catLabels[cat].desc;
+    const grid = document.createElement('div');
+    grid.className = 'card-grid';
+    items.forEach(t=>{
+      const card = document.createElement('div');
+      card.className = 'tpl-card';
+      card.innerHTML = `<span class="icon">${t.icon}</span><h4>${t.title}</h4><span class="open">Ver template →</span>`;
+      card.addEventListener('click', ()=>openModal(t));
+      grid.appendChild(card);
+    });
+    container.appendChild(catTitle);
+    container.appendChild(catDesc);
+    container.appendChild(grid);
+  });
+}
+renderTemplates("all");
+
+document.querySelectorAll('.cat-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    renderTemplates(btn.dataset.cat);
+  });
+});
+
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+    document.getElementById(btn.dataset.view).classList.add('active');
+  });
+});
+
+const overlay = document.getElementById('overlay');
+const modalTitle = document.getElementById('modal-title');
+const modalContent = document.getElementById('modal-content');
+const modalCopy = document.getElementById('modal-copy');
+let currentContent = "";
+
+function openModal(t){
+  modalTitle.textContent = t.title;
+  modalContent.textContent = t.content;
+  currentContent = t.content;
+  modalCopy.textContent = "📋 Copiar template";
+  modalCopy.classList.remove('copied');
+  overlay.classList.add('active');
+}
+document.getElementById('modal-close').addEventListener('click', ()=>overlay.classList.remove('active'));
+overlay.addEventListener('click', (e)=>{ if(e.target===overlay) overlay.classList.remove('active'); });
+
+// ---------- PROCESO / TIMELINE ----------
+const steps = [
+  {
+    title:"Discovery Call — relevamiento del rol",
+    html:`<p>Quien recibe el pedido del cliente releva preliminarmente todo lo posible: empresa, momento del negocio, contexto, JD, requisitos, banda salarial, beneficios, reemplazo o rol nuevo, a quién reporta, gente a cargo. Con eso arma el relevamiento preliminar.</p>
+    <p>Andá más allá de la JD escrita: por qué se abre justo ahora, qué pasó con la última persona en el rol si es reemplazo, qué hace fracasar a alguien en ese puesto más allá del expertise técnico.</p>`,
+    tpls:["jd-interna"]
+  },
+  {
+    title:"Organización interna y preparación del kickoff",
+    html:`<p>Si trabajás en equipo, definí cómo se reparte la búsqueda: la lleva una sola persona (100%), una con guía/soporte de otra (80/20, típico si es la primera vez en esa empresa o rol), o las dos a la par (50/50).</p>
+    <p>Armá una carpeta o espacio compartido (Drive, Notion, lo que uses) con la nomenclatura <strong>Nombre de la empresa - Nombre de la posición</strong>, donde vas a ir dejando toda la info del proceso: ternas, CVs, JD, etc. En paralelo, estudiá la búsqueda, anotá las dudas que te surjan y buscá 2-3 perfiles de referencia para llevar al kickoff.</p>`,
+    tpls:["correo-kickoff"]
+  },
+  {
+    title:"Reunión de kickoff",
+    html:"<p>Por videollamada. Tiene que cerrar con: JD 100% aprobada, claridad del proceso (entrevistas, con quién, modalidad, horarios), info de preocupacionales, timing de próxima terna, y canal de comunicación acordado.</p>",
+    tpls:["esquema-reunion","jd-aprobada"]
+  },
+  {
+    title:"Sourcing & Boolean — construcción de la búsqueda",
+    html:`<p>Armá tu string booleano con los sinónimos y herramientas clave del rol, y probalo en tu buscador o ATS. Usá la IA como copiloto para expandir sinónimos que quizás no se te ocurrieron.</p>
+    <p>Combiná sourcing activo (boolean + X-ray) con publicación en portales — no dependas de un solo canal.</p>`,
+    tpls:["boolean-template","prompt-boolean-ia"]
+  },
+  {
+    title:"Publicación y contacto con candidatos",
+    html:`<p>Se publica la vacante en tu ATS o portal de empleo (LinkedIn Recruiter, Bumeran, Computrabajo, Get on Board, o el que uses) y se activan mensajes proactivos personalizados.</p>
+    <p>En todos los casos, pensá en que el contacto le sirva a la persona para sus próximos procesos — no es solo trámite, es una oportunidad de sumarle valor real, siga o no en este proceso puntual.</p>`,
+    tpls:["jd-publica","prompt-copy-4c","msg-proactivo","resp-avance","resp-no-avance"]
+  },
+  {
+    title:"Entrevistas — Discovery del candidato",
+    html:`<p>Estructura fija (apertura, contexto, validación de perfil, espacio abierto, cierre) y preguntas comportamentales con método STAR — pedís un caso real, no una opinión general.</p>`,
+    tpls:["esquema-entrevista","guia-arquetipos","feedback-avance","feedback-no-avance"]
+  },
+  {
+    title:"Análisis de candidatos",
+    html:`<p>Antes de armar la terna, analizá y comparás los perfiles relevados contra la JD aprobada: fit con excluyentes y deseables, fortalezas concretas, señales de riesgo y ranking relativo entre candidatos.</p>
+    <p>Para que este análisis sea consistente entre búsquedas y no dependa solo del criterio del día, usá un prompt estructurado en las <strong>4C</strong> — Contexto, Contenido, Criterio y Comprobación.</p>`,
+    tpls:["prompt-analisis-4c"]
+  },
+  {
+    title:"Informe de perfil & envío de terna",
+    html:`<p>Por correo, con un Informe de Perfil bajo un formato propio y consistente para todos tus informes. Pedile al cliente su impresión de cada perfil y, ante feedback negativo, motivos precisos para afinar el criterio.</p>`,
+    tpls:["correo-terna","informe-terna","prompt-informe-perfil"]
+  },
+  {
+    title:"Definición de finalista",
+    html:`<p>Solicitá al cliente definir preocupacionales (quién los gestiona) y oferta (la arma el cliente o vos, con tu propio modelo), más las claves: salario, condiciones, vacaciones, fecha preliminar de ingreso.</p>`,
+    tpls:["correo-definiciones"]
+  },
+  {
+    title:"Offer y Negociación",
+    html:`<p>La oferta no es el mail que se manda al final — es el resultado de todo lo que escuchaste durante el proceso. Antes de mandarla, cruzá la expectativa del candidato contra lo que se va a ofrecer, y comunicala siempre con una llamada antes del mail formal.</p>`,
+    tpls:["guia-negociacion","offer-modelo","correo-oferta"]
+  },
+  {
+    title:"Acompañamiento (antes y durante)",
+    html:`<p>Acompañamiento en ambos sentidos de todo lo referido a preocupacionales y coordinaciones intermedias. Con todo ok, se confirma al candidato la fecha de ingreso.</p>
+    <p>Acá también se le envía al hiring manager la Ficha de Ingreso — previo al ingreso, para que pueda preparar el onboarding con tiempo.</p>`,
+    tpls:["correo-hm-ficha","ficha-ingreso"]
+  },
+  {
+    title:"Día de ingreso, experiencia y feedback",
+    html:`<ul>
+      <li>Mail de bienvenida + encuesta de satisfacción al candidato, el día de ingreso.</li>
+      <li>Regla de base: feedback a todas las personas que pasaron por el proceso, no solo a las que avanzan — cada interacción es una comunicación de quién sos como marca empleadora.</li>
+    </ul>`,
+    tpls:["correo-bienvenida"]
+  },
+  {
+    title:"Métricas & retrospectiva de gestión",
+    html:`<p>Cerrá cada búsqueda calculando tus propias métricas: NPS cliente y candidato, Time to Hire, Eficiencia Interna, Entendí la necesidad, Percepción de eficiencia del cliente y Eficiencia General. Es lo que te sienta en la mesa a defender tu trabajo con datos, no solo con "confíen en mí".</p>`,
+    tpls:["reporte-metricas"]
+  }
+];
+
+const timelineEl = document.getElementById('timeline');
+steps.forEach((s,i)=>{
+  const step = document.createElement('div');
+  step.className = 'step';
+  const tplsHtml = s.tpls && s.tpls.length
+    ? `<div class="step-tpls">
+        <span class="step-tpls-label">Templates de este paso:</span>
+        ${s.tpls.map(id=>`<button class="tpl-chip" data-tpl="${id}">${templatesById[id].icon} ${templatesById[id].title}</button>`).join('')}
+      </div>`
+    : '';
+  step.innerHTML = `
+    <div class="step-header">
+      <div class="num blocky">${String(i+1).padStart(2,'0')}</div>
+      <h3>${s.title}</h3>
+      <span class="chevron">▾</span>
+    </div>
+    <div class="step-detail"><div class="step-detail-inner">${s.html}${tplsHtml}</div></div>
+  `;
+  step.querySelector('.step-header').addEventListener('click', ()=>{
+    step.classList.toggle('open');
+  });
+  step.querySelectorAll('.tpl-chip').forEach(btn=>{
+    btn.addEventListener('click', (e)=>{
+      e.stopPropagation();
+      openModal(templatesById[btn.dataset.tpl]);
+    });
+  });
+  timelineEl.appendChild(step);
+});
+
+// ---------- CRITERIOS / PROTOCOLOS ----------
+const protocols = [
+  {
+    icon:"📵",
+    situacion:"Si el candidato no responde",
+    html:`<p class="accion">Agotar todas las vías antes de descartar: mail, WhatsApp y llamada — con tiempos espaciados y razonables entre cada intento.</p>`
+  },
+  {
+    icon:"🎯",
+    situacion:"Al enviar ternas",
+    html:`<p class="accion">Sobre todo en la primera terna: seguí trabajando en paralelo en perfiles de backup. Nunca te quedes solo con los perfiles ya enviados.</p>`
+  },
+  {
+    icon:"📵",
+    situacion:"Si el hiring manager no responde",
+    html:`<p class="accion">Agotar todas las vías: mail, WhatsApp y llamada — con tiempos espaciados y razonables. Si trabajás en equipo y sigue sin respuesta, avisale a tu líder o socia/o para que se contacte directo.</p>`
+  },
+  {
+    icon:"🔄",
+    situacion:"Si vamos por la 2ª terna y/o ya se presentaron más de 4 perfiles, con muchas dudas del hiring manager",
+    html:`<p class="accion">Agendá un meet de re-calibración para volver a alinear expectativas con el cliente y entender qué es lo que no está cerrando.</p>`
+  },
+  {
+    icon:"🖤",
+    situacion:"Regla general — cuando hay que dar una mala noticia al cliente",
+    html:`<p>Ej: se cayó un candidato que le gustaba.</p><p class="accion">Siempre se acompaña de una alternativa concreta. Ej: "Te traigo este nuevo candidato / esta nueva terna que se le equipara, lista para que la conozcas."</p>`
+  },
+  {
+    icon:"🔍",
+    situacion:"Transparencia — con candidato y con cliente",
+    html:`<p class="accion">Nada se maquilla para acelerar un cierre. Si hay algo del rol que puede no gustarle a determinado perfil, se dice antes de que avance. Si un candidato tiene una duda real, se comunica al cliente — ocultarla no acorta el proceso, lo hace fallar más tarde y peor.</p>`
+  },
+  {
+    icon:"👻",
+    situacion:"Ghosting — en las dos direcciones",
+    html:`<p class="accion">El silencio del candidato es una frustración operativa. Tu propio silencio es un daño de marca — y es el que más control tenés para evitar. Avisá cuando hay demoras, aunque no haya novedades concretas: comunicar un "no" a tiempo cuesta menos reputación que callarte.</p>`
+  },
+  {
+    icon:"🔒",
+    situacion:"Confidencialidad de información sensible",
+    html:`<p class="accion">El motivo real de salida de un candidato de su empleo actual, búsquedas confidenciales (reemplazos, reestructuraciones) y datos personales compartidos en confianza durante una entrevista no se comparten sin necesidad real.</p>`
+  },
+  {
+    icon:"💰",
+    situacion:"Contraoferta del candidato",
+    html:`<p class="accion">Anticipala antes de que pase: preguntá directo "si tu empresa actual te iguala esto hoy, ¿te quedás?". La respuesta te dice si tenés que blindar la oferta con algo más que plata.</p>`
+  },
+  {
+    icon:"💌",
+    situacion:"Feedback a todas las personas",
+    html:`<p class="accion">Todo el que entra al proceso sale con una devolución, gane o pierda la búsqueda — específica y accionable, no un genérico "no fuiste seleccionado". Quien queda afuera hoy puede ser cliente, referente, o volver a postularse mañana.</p>`
+  },
+  {
+    icon:"🤖",
+    situacion:"Ética con la IA como copiloto",
+    html:`<p class="accion">No se fabrica información sobre un candidato con IA. No se esconde que se usó. Y la decisión final sobre una persona la firmás vos — la IA acelera y sugiere, tu criterio profesional decide.</p>`
+  }
+];
+
+const protocolContainer = document.getElementById('protocol-container');
+const protocolList = document.createElement('div');
+protocolList.className = 'protocol-list';
+protocols.forEach(p=>{
+  const card = document.createElement('div');
+  card.className = 'protocol-card';
+  card.innerHTML = `
+    <div class="p-icon">${p.icon}</div>
+    <div>
+      <span class="situacion">${p.situacion}</span>
+      ${p.html}
+    </div>
+  `;
+  protocolList.appendChild(card);
+});
+protocolContainer.appendChild(protocolList);
+
+modalCopy.addEventListener('click', ()=>{
+  const fallbackCopy = ()=>{
+    const ta = document.createElement('textarea');
+    ta.value = currentContent;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    try{ document.execCommand('copy'); }catch(e){}
+    document.body.removeChild(ta);
+  };
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(currentContent).catch(fallbackCopy);
+  } else {
+    fallbackCopy();
+  }
+  modalCopy.textContent = "¡Copiado! 🖤";
+  modalCopy.classList.add('copied');
+  setTimeout(()=>{
+    modalCopy.textContent = "📋 Copiar template";
+    modalCopy.classList.remove('copied');
+  }, 1800);
+});
+</script>
+
+</body>
+</html>
